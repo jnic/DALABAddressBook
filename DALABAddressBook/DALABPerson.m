@@ -56,7 +56,10 @@
 - (NSData *)imageData
 {
     if (self.hasImageData) {
-        return (__bridge NSData*)ABPersonCopyImageData(self.record);
+        CFDataRef imageDataRef = ABPersonCopyImageData(self.record);
+        NSData *imageData = [(__bridge NSData *)imageDataRef copy];
+        CFRelease(imageDataRef);
+        return imageData;
     } else if ([self.linkedPeople count]) {
         __block NSData *imageData = nil;
         [self.linkedPeople enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
