@@ -91,7 +91,7 @@ void DALExternalChangeCallback(ABAddressBookRef addressBook, CFDictionaryRef inf
 {
     CFArrayRef records = ABAddressBookCopyArrayOfAllPeople(_addressBook);
     CFMutableArrayRef recordsMutable = CFArrayCreateMutableCopy(kCFAllocatorDefault, CFArrayGetCount(records), records);
-    CFArraySortValues(recordsMutable, CFRangeMake(0, CFArrayGetCount(recordsMutable)), (CFComparatorFunction)ABPersonComparePeopleByName, (void *)ABPersonGetSortOrdering());
+    CFArraySortValues(recordsMutable, CFRangeMake(0, CFArrayGetCount(recordsMutable)), (CFComparatorFunction)ABPersonComparePeopleByName, (void *)(unsigned long)ABPersonGetSortOrdering());
     CFRelease(records);
     NSArray *bridgedRecords = (__bridge_transfer NSArray*)recordsMutable;
     NSMutableArray *people = [NSMutableArray arrayWithCapacity:[bridgedRecords count]];
